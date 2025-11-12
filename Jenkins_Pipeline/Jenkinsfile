@@ -8,9 +8,10 @@ pipeline {
 
         stage ('Test') {
             steps {
-                sh 'nove --version'
+                sh 'node --version'
             }
-    }
+     }
 
     }
+  }
 }

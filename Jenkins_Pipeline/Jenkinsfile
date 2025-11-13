@@ -9,7 +9,7 @@ pipeline {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
                  sh '''
                     # Use temp cache to avoid permission issues
-                    npm config set cache /tmp/.npm-cache --global
+                    npm config set cache /tmp/.npm-cache
 
                     # Print environment info for debugging
                     echo "Running as: $(id)"

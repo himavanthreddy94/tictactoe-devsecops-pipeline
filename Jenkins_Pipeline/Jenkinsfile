@@ -1,6 +1,31 @@
 pipeline {
     agent none
     stages {
+        stage("Unit Tests") {
+            agent {
+                docker { image 'node:20-alpine' }
+            }
+            steps {
+                git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
+                // Remove any leftover node_modules and use a workspace-local npm cache
+                sh 'rm -rf node_modules || true'
+                sh 'npm ci --cache "$WORKSPACE/.npm"'
+                sh 'npm run test'
+            }
+        }
+        stage("Lint") {
+            agent {
+                docker { image 'node:20-alpine' }
+            }
+            steps {
+                git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
+                // Remove any leftover node_modules and use a workspace-local npm cache
+                sh 'rm -rf node_modules || true'
+                sh 'npm ci --cache "$WORKSPACE/.npm"'
+                sh 'npm run lint'
+            }
+        }
+
         stage("Build") {
             agent {
             docker { image 'node:20-alpine' }

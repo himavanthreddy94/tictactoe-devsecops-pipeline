@@ -4,37 +4,31 @@ pipeline {
         
         stage("Unit Tests") {
             agent {
-            docker { image 'ubuntu:latest' }
+            docker { image 'node:20-alpine' }
         }
             steps {
-                sh 'apt update'
-                sh 'apt install node npm -y'
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'npm i'
+                sh 'npm ci'
                 sh 'npm test'
             }
         }
         stage("Lint") {
             agent {
-            docker { image 'ubuntu:latest' }
+            docker { image 'node:20-alpine' }
         }
             steps {
-                sh 'apt update'
-                sh 'apt install node npm -y'
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'npm i'
+                sh 'npm ci'
                 sh 'npm run lint'
             }
         }
         stage("Build") {
             agent {
-            docker { image 'ubuntu:latest' }
+            docker { image 'node:20-alpine' }
         }
             steps {
-                sh 'apt update'
-                sh 'apt install node npm -y'
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'npm i'
+                sh 'npm ci'
                 sh 'npm run build'
                 archiveArtifacts artifacts: 'dist/**', followSymlinks: false
             }

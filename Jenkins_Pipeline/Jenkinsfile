@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage("Unit Tests") {
             agent {
-                docker { image 'node:20-bullseye-slim' }
+                docker { image 'node:24-bullseye-slim' }
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
@@ -13,7 +13,7 @@ pipeline {
         }
         stage("Lint") {
             agent {
-                docker { image 'node:20-bullseye-slim' }
+                docker { image 'node:24-bullseye-slim' }
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
@@ -23,7 +23,7 @@ pipeline {
         }
         stage("Build") {
             agent {
-                docker { image 'node:20-bullseye-slim' }
+                docker { image 'node:24-bullseye-slim' }
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'

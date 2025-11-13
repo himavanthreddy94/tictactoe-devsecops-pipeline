@@ -3,18 +3,15 @@ pipeline {
     stages {
         stage("Unit Tests") {
             agent {
-                docker { image 'node:24-bullseye-slim' }
+                docker { image 'node:24-alpine' }
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                 sh '''
-                    # Use temp cache to avoid permission issues
-                    npm config set cache /tmp/.npm-cache
-
-                    # Print environment info for debugging
-                    echo "Running as: $(id)"
-                    echo "NPM cache: $(npm config get cache)"
-
+                 steps {
+                    sh '''
+                    export HOME=/tmp
+                    mkdir -p $HOME/.npm-cache
+                    npm config set cache $HOME/.npm-cache --userconfig=$HOME/.npmrc
                     npm ci
                     npm test
                     '''
@@ -22,7 +19,7 @@ pipeline {
         }
         stage("Lint") {
             agent {
-                docker { image 'node:24-bullseye-slim' }
+                docker { image 'node:24-alpine' }
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
@@ -32,7 +29,7 @@ pipeline {
         }
         stage("Build") {
             agent {
-                docker { image 'node:24-bullseye-slim' }
+                docker { image 'node:24-alpine' }
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'

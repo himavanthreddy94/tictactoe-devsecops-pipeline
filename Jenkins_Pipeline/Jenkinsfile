@@ -8,11 +8,16 @@ pipeline {
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
                  sh '''
-                    mkdir -p $WORKSPACE/.npm-cache
-                    npm config set cache $WORKSPACE/.npm-cache --global
+                    # Use temp cache to avoid permission issues
+                    npm config set cache /tmp/.npm-cache --global
+
+                    # Print environment info for debugging
+                    echo "Running as: $(id)"
+                    echo "NPM cache: $(npm config get cache)"
+
                     npm ci
+                    npm test
                     '''
-                sh 'npm test || echo "No tests found, would add tests in a real project"'
             }
         }
         stage("Lint") {

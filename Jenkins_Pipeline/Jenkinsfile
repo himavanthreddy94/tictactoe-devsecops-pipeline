@@ -7,14 +7,13 @@ pipeline {
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                 steps {
-                    sh '''
-                    export HOME=/tmp
-                    mkdir -p $HOME/.npm-cache
-                    npm config set cache $HOME/.npm-cache --userconfig=$HOME/.npmrc
-                    npm ci
-                    npm test
-                    '''
+                sh '''
+                export HOME=/tmp
+                mkdir -p $HOME/.npm-cache
+                npm config set cache $HOME/.npm-cache --userconfig=$HOME/.npmrc
+                npm ci
+                npm test
+                '''
             }
         }
         stage("Lint") {
@@ -41,3 +40,4 @@ pipeline {
 
     }
 }
+

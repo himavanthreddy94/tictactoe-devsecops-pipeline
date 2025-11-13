@@ -2,9 +2,6 @@ pipeline {
     agent none
     stages {
         stage("Unit Tests") {
-            agent {
-                docker { image 'node:24-alpine' }
-            }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
                 sh 'npm ci'
@@ -12,9 +9,6 @@ pipeline {
             }
         }
         stage("Lint") {
-            agent {
-                docker { image 'node:24-alpine' }
-            }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
                 sh 'npm ci'
@@ -22,9 +16,6 @@ pipeline {
             }
         }
         stage("Build") {
-            agent {
-                docker { image 'node:24-alpine' }
-            }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
                 sh 'npm ci'

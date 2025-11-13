@@ -7,8 +7,11 @@ pipeline {
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'sudo chown -R $(whoami) ~/.npm'
-                sh 'npm ci'
+                 sh '''
+                    mkdir -p $WORKSPACE/.npm-cache
+                    npm config set cache $WORKSPACE/.npm-cache --global
+                    npm ci
+                    '''
                 sh 'npm test || echo "No tests found, would add tests in a real project"'
             }
         }

@@ -10,7 +10,7 @@ pipeline {
                 sh 'apt update'
                 sh 'apt install node npm -y'
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'npm ci'
+                sh 'npm i'
                 sh 'npm test'
             }
         }
@@ -22,7 +22,7 @@ pipeline {
                 sh 'apt update'
                 sh 'apt install node npm -y'
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'npm ci'
+                sh 'npm i'
                 sh 'npm run lint'
             }
         }
@@ -34,7 +34,7 @@ pipeline {
                 sh 'apt update'
                 sh 'apt install node npm -y'
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'npm ci'
+                sh 'npm i'
                 sh 'npm run build'
                 archiveArtifacts artifacts: 'dist/**', followSymlinks: false
             }

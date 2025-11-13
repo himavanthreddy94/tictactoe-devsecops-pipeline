@@ -3,33 +3,33 @@ pipeline {
     stages {
         stage("Unit Tests") {
             agent {
-                docker { image 'node:20-alpine' }
+                docker { image 'node:20-bullseye-slim' }
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'npm install'
-                sh 'npm test'
+                sh 'npm ci'
+                sh 'npm test -- --loglevel=verbose'
             }
         }
         stage("Lint") {
             agent {
-                docker { image 'node:20-alpine' }
+                docker { image 'node:20-bullseye-slim' }
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'npm install'
+                sh 'npm ci'
                 sh 'npm run lint'
             }
         }
         stage("Build") {
             agent {
-                docker { image 'node:20-alpine' }
+                docker { image 'node:20-bullseye-slim' }
             }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'npm install'
+                sh 'npm ci'
                 sh 'npm run build'
-                archiveArtifacts artifacts: '/dist', followSymlinks: false
+                archiveArtifacts artifacts: 'dist/**', followSymlinks: false
             }
         }
 

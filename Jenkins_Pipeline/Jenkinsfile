@@ -7,7 +7,9 @@ pipeline {
         }
             steps {
                 git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
-                sh 'npm ci'
+                // Remove any leftover node_modules and use a workspace-local npm cache
+                sh 'rm -rf node_modules || true'
+                sh 'npm ci --cache "$WORKSPACE/.npm"'
                 sh 'npm run build'
                 archiveArtifacts artifacts: 'dist/**', followSymlinks: false
             }

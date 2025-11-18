@@ -40,6 +40,25 @@ pipeline {
             }
         }
 
+        stage("Docker Build and Push") {
+            agent {
+                docker { image 'ubuntu:latest' }
+            }
+            steps {
+                     git url: 'https://github.com/himavanthreddy94/tictactoe-devsecops-pipeline.git', branch: 'main'
+                        sh '''
+                            apt-get update
+                            apt-get install -y docker.io
+                            docker --version
+                            docker build -t tictactoe-app:latest .
+                            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+                            docker tag tictactoe-app:latest $DOCKERHUB_USERNAME/tictactoe-app:latest
+                            docker push $DOCKERHUB_USERNAME/tictactoe-app:latest
+                        '''
+                 
+
     }
+}
+}
 }
 
